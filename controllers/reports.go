@@ -163,58 +163,58 @@ func LoginAdmin(c *fiber.Ctx) error {
 	})
 }
 
-func UpdateAdminPassword(c *fiber.Ctx) error {
-	c.Accepts("application/json")
+// func UpdateAdminPassword(c *fiber.Ctx) error {
+// 	c.Accepts("application/json")
 
-	id := c.Params("id")
+// 	id := c.Params("id")
 
-	admin := &models.Admin{}
+// 	admin := &models.Admin{}
 
-	collection := mgm.Coll(admin)
+// 	collection := mgm.Coll(admin)
 
-	err := collection.FindByID(id, admin)
+// 	err := collection.FindByID(id, admin)
 
-	if err != nil {
-		return c.Status(400).JSON(fiber.Map{
-			"error": true,
-			"msg":   err.Error(),
-		})
-	}
+// 	if err != nil {
+// 		return c.Status(400).JSON(fiber.Map{
+// 			"error": true,
+// 			"msg":   err.Error(),
+// 		})
+// 	}
 
-	var usr models.NewPassword
+// 	var usr models.NewPassword
 
-	if err := json.Unmarshal(c.Body(), &usr); err != nil {
-		return c.Status(500).JSON(fiber.Map{
-			"error": true,
-			"msg":   err.Error(),
-		})
-	}
+// 	if err := json.Unmarshal(c.Body(), &usr); err != nil {
+// 		return c.Status(500).JSON(fiber.Map{
+// 			"error": true,
+// 			"msg":   err.Error(),
+// 		})
+// 	}
 
-	if !helpers.CheckPasswordHash(usr.OldPassword, admin.Password) {
-		return c.Status(400).JSON(fiber.Map{
-			"error": true,
-			"msg":   "Your current password is incorrect",
-		})
-	}
+// 	if !helpers.CheckPasswordHash(usr.OldPassword, admin.Password) {
+// 		return c.Status(400).JSON(fiber.Map{
+// 			"error": true,
+// 			"msg":   "Your current password is incorrect",
+// 		})
+// 	}
 
-	// write update logic here
-	admin.Password, _ = helpers.HashPassword(usr.Password)
+// 	// write update logic here
+// 	admin.Password, _ = helpers.HashPassword(usr.Password)
 
-	err = collection.Update(admin)
+// 	err = collection.Update(admin)
 
-	if err := json.Unmarshal(c.Body(), &usr); err != nil {
-		return c.Status(500).JSON(fiber.Map{
-			"error": true,
-			"msg":   err.Error(),
-		})
-	}
+// 	if err := json.Unmarshal(c.Body(), &usr); err != nil {
+// 		return c.Status(500).JSON(fiber.Map{
+// 			"error": true,
+// 			"msg":   err.Error(),
+// 		})
+// 	}
 
-	return c.JSON(fiber.Map{
-		"error": false,
-		"data":  admin,
-		"msg":   "Admin password updated successfully",
-	})
-}
+// 	return c.JSON(fiber.Map{
+// 		"error": false,
+// 		"data":  admin,
+// 		"msg":   "Admin password updated successfully",
+// 	})
+// }
 
 func CreateReport(c *fiber.Ctx) error {
 	c.Accepts("application/json")

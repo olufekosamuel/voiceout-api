@@ -38,6 +38,11 @@ type Department struct {
 	Department       string `json:"department" bson:"department"`
 }
 
+type NewPassword struct {
+	OldPassword string `json:"old_password" bson:"old_password"`
+	Password    string `json:"password" bson:"password"`
+}
+
 func NewAdmin() *Admin {
 	return &Admin{}
 }
